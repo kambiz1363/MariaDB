@@ -28,3 +28,16 @@ Following is a list of terms used in relational database management systems i.e.
 **Index**: An index is virtually identical to the index of a book.
 
 **Referential Integrity**: This term refers to ensuring all foreign key values point to existing rows.
+
+ ### Features of MariaDB
+
+MariaDB provides the same features of MySQL with some extensions. It is relatively new and advance.
+Following is a list of features of MariaDB:
+
+* MariaDB is licenced under GPL, LGPL, or BSD.
+* MariaDB includes a wide selection of storage engines, including high-performance storage engines, for working with other RDBMS data sources.
+* MariaDB uses a standard and popular querying language.
+* MariaDB runs on a number of operating systems and supports a wide variety of programming languages.
+* MariaDB offers support for PHP, one of the most popular web development languages.
+* MariaDB offers Galera cluster technology.
+* MariaDB also offers many operations and commands unavailable in MySQL, and eliminates/replaces features impacting performance negatively.
