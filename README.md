@@ -2,7 +2,7 @@
 ## What is MariaDB
 MariaDB is a relational database management system. It stores data in various tables. Primary keys and foreign keys are used to establish relationship between these tables.
 MarinaDB provides the following features:
-* RDBMS facilitates you to implement a data source with tables, columns, and indices.
+* RDBMS(Relational Database Management System) facilitates you to implement a data source with tables, columns, and indices.
 * RDBMS provides integrity of references across rows of multiple tables.
 * It is used to automatically update indices.
 * It is used to interpret SQL queries and operations in manipulating or sourcing data from tables.
