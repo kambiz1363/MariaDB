@@ -62,7 +62,40 @@ The most common data types in MariaDB are the following (you can consult the com
 * TIMESTAMP is used to define the moment a row was added or updated.
 After having reviewed these data types, you will be in a better position to determine which data type you need to assign to a given column in a table.
 ### Creating a New Database
+```
 MariaDB [(none)]> CREATE DATABASE BookstoreDB;
+Query OK, 1 row affected (0.714 sec)
+```
+### Creating Tables with Primary and Foreign Keys
+Before we dive into creating tables, there are two fundamental concepts about relational databases that we need to review: primary and foreign keys.
+A primary key contains a value that uniquely identifies each row, or record, in the table. On the other hand, a foreign key is used to create a link between the data in two tables, and to control the data that can be stored in the table where the foreign key is located. Both primary and foreign keys are generally INTs.
+
+To illustrate, let’s use the ```BookstoreDB``` and create two tables named ```AuthorsTBL``` and ```BooksTBL``` as follows. The NOT NULL constraint indicates that the associated field requires a value other than NULL.
+
+Also, AUTO_INCREMENT is used to increase by one the value of INT primary key columns when a new record is inserted into the table.
+```
+MariaDB [(none)]> USE BookstoreDB;
+Database changed
+MariaDB [BookstoreDB]> CREATE TABLE AuthorsTBL (
+    -> AuthorID INT NOT NULL AUTO_INCREMENT,
+    -> AuthorName VARCHAR(100),
+    -> PRIMARY KEY(AuthorID)
+    -> );
+Query OK, 0 rows affected (2.840 sec)
+
+MariaDB [BookstoreDB]> CREATE TABLE BooksTBL (
+    -> BookID INT NOT NULL AUTO_INCREMENT,
+    -> BookName VARCHAR(100) NOT NULL,
+    -> AuthorID INT NOT NULL,
+    -> BookPrice DECIMAL(6,2) NOT NULL,
+    -> BookLastUpdated TIMESTAMP,
+    -> BookIsAvailable BOOLEAN,
+    -> PRIMARY KEY(BookID),
+    -> FOREIGN KEY (AuthorID) REFERENCES AuthorsTBL(AuthorID)
+    -> );
+Query OK, 0 rows affected (4.914 sec)
+
+```
 ### MariaDB Closter
 Clusters come in two general configurations, active-passive and active-active. In active-passive clusters, all writes are done on a single active server and then copied to one or more passive servers that are poised to take over only in the event of an active server failure. Some active-passive clusters also allow SELECT operations on passive nodes. In an active-active cluster, every node is read-write and a change made to one is replicated to all.
  Galera is a database clustering solution that enables you to set up multi-master clusters using synchronous replication. Galera automatically handles keeping the data on different nodes in sync while allowing you to send read and write queries to any of the nodes in the cluster.
