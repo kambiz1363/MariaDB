@@ -141,8 +141,8 @@ wsrep_cluster_address="gcomm://192.168.43.40,192.168.43.41,192.168.43.42"
 wsrep_sst_method=rsync
 
 # Galera Node Configuration
-wsrep_node_address="192.168.43.41"
-wsrep_node_name="galera2"
+wsrep_node_address="192.168.43.40" # ip for local server
+wsrep_node_name="galera1" # name for localserver
 ```
 ### Starting the Cluster
 In this step, you will start your MariaDB cluster. To begin, you need to stop the running MariaDB service so that you can bring your cluster online.
