@@ -61,6 +61,7 @@ The most common data types in MariaDB are the following (you can consult the com
 * DATETIME is the combination of DATE and TIME in YYYY-MM-DD HH:MM:SS format.
 * TIMESTAMP is used to define the moment a row was added or updated.
 After having reviewed these data types, you will be in a better position to determine which data type you need to assign to a given column in a table.
+## EXAMPLE 
 ### Creating a New Database
 ```
 MariaDB [(none)]> CREATE DATABASE BookstoreDB;
