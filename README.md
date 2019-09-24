@@ -41,6 +41,9 @@ Following is a list of features of MariaDB:
 * MariaDB offers support for PHP, one of the most popular web development languages.
 * MariaDB offers Galera cluster technology.
 * MariaDB also offers many operations and commands unavailable in MySQL, and eliminates/replaces features impacting performance negatively.
+## Introducing MariaDB data Types
+To store persistent information in a database, we will use **tables** that store rows of data. Often, two or more tables will be related to each other in some way. That is part of the organization that characterizes the use of relational databases.
+tables are database objects where we will keep persistent information. Each table consists of two or more fields (also known as **columns**) of a given data type (the type of information) that such field can store.
 ## MariaDB Closter
 Clusters come in two general configurations, active-passive and active-active. In active-passive clusters, all writes are done on a single active server and then copied to one or more passive servers that are poised to take over only in the event of an active server failure. Some active-passive clusters also allow SELECT operations on passive nodes. In an active-active cluster, every node is read-write and a change made to one is replicated to all.
  Galera is a database clustering solution that enables you to set up multi-master clusters using synchronous replication. Galera automatically handles keeping the data on different nodes in sync while allowing you to send read and write queries to any of the nodes in the cluster.
