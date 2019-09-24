@@ -65,3 +65,65 @@ After having reviewed these data types, you will be in a better position to dete
 ### MariaDB Closter
 Clusters come in two general configurations, active-passive and active-active. In active-passive clusters, all writes are done on a single active server and then copied to one or more passive servers that are poised to take over only in the event of an active server failure. Some active-passive clusters also allow SELECT operations on passive nodes. In an active-active cluster, every node is read-write and a change made to one is replicated to all.
  Galera is a database clustering solution that enables you to set up multi-master clusters using synchronous replication. Galera automatically handles keeping the data on different nodes in sync while allowing you to send read and write queries to any of the nodes in the cluster.
+## How To Configure a Galera Cluster with MariaDB
+Clustering adds high availability to your database by distributing changes to different servers. In the event that one of the instances fails, others are quickly available to continue serving.
+#### Prerequisites
+Three Ubuntu 18.04 Droplets with private networking enabled
+### Installing MariaDB on All Servers
+In this step, you will install the actual MariaDB packages on your three servers.
+```
+$ sudo apt install mariadb-server
+```
+logging into MariaDB:
+```
+$sudo mysql -uroot
+```
+```
+MariaDB [(none)]> set password = password("your_password");
+```
+### Configuring galera
+By default, MariaDB is configured to check the /etc/mysql/conf.d directory to get additional configuration settings from files ending in .cnf. Create a file in this directory with all of your cluster-specific directives:
+```
+$ sudo vim /etc/mysql/conf.d/galera.cnf
+```
+Add the following configuration into the file.
+```
+[mysqld]
+binlog_format=ROW
+default-storage-engine=innodb
+innodb_autoinc_lock_mode=2
+bind-address=0.0.0.0
+
+# Galera Provider Configuration
+wsrep_on=ON
+wsrep_provider=/usr/lib/galera/libgalera_smm.so
+
+# Galera Cluster Configuration
+wsrep_cluster_name="test_cluster"
+wsrep_cluster_address="gcomm://192.168.43.40,192.168.43.41,192.168.43.42"
+
+# Galera Synchronization Configuration
+wsrep_sst_method=rsync
+
+# Galera Node Configuration
+wsrep_node_address="192.168.43.41"
+wsrep_node_name="galera2"
+```
+### Starting the Cluster
+In this step, you will start your MariaDB cluster. To begin, you need to stop the running MariaDB service so that you can bring your cluster online.
+```
+$ sudo systemctl stop mysql
+```
+#### Bring Up
+sudo galera_new_cluster
+```
+$ mysql -u root -p -e "SHOW STATUS LIKE 'wsrep_cluster_size'"
+```
+```
+Output
++--------------------+-------+
+| Variable_name      | Value |
++--------------------+-------+
+| wsrep_cluster_size | 3     |
++--------------------+-------+
+```
