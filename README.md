@@ -162,3 +162,6 @@ Output
 | wsrep_cluster_size | 3     |
 +--------------------+-------+
 ```
+### resource
+[mariadb website](https://mariadb.org/)
+[Learn MySQL MariaDB for Beginners](https://www.tecmint.com/learn-mysql-mariadb-for-beginners/)
