@@ -97,9 +97,24 @@ MariaDB [BookstoreDB]> CREATE TABLE BooksTBL (
 Query OK, 0 rows affected (4.914 sec)
 
 ```
-### MariaDB Closter
+## MariaDB Closter
+### What is Galera Cluster
 Clusters come in two general configurations, active-passive and active-active. In active-passive clusters, all writes are done on a single active server and then copied to one or more passive servers that are poised to take over only in the event of an active server failure. Some active-passive clusters also allow SELECT operations on passive nodes. In an active-active cluster, every node is read-write and a change made to one is replicated to all.
- Galera is a database clustering solution that enables you to set up multi-master clusters using synchronous replication. Galera automatically handles keeping the data on different nodes in sync while allowing you to send read and write queries to any of the nodes in the cluster.
+Galera is a database clustering solution that enables you to set up multi-master clusters using synchronous replication. Galera automatically handles keeping the data on different nodes in sync while allowing you to send read and write queries to any of the nodes in the cluster.
+ 
+Galera Cluster is a synchronous multi-master replication plug-in for InnoDB. It is very different from the regular MySQL Replication, and addresses a number of issues including write conflicts when writing on multiple masters, replication lag and slaves being out of sync with the master. Users do not have to know which server they can write to (the master) and which servers they can read from (the slaves).
+
+An application can write to any node in a Galera cluster, and transaction commits (row-based replication events) are then applied on all servers, via a certification-based replication. Certification-based replication is an alternative approach to synchronous database replication using Group Communication and transaction ordering techniques.
+### Galera Cluster Implementation
+Galera Cluster implements replication using 4 components:
+* Database Management System - The database server that runs on the individual node. The supported DBMS are MySQL Server, Percona Server for MySQL and MariaDB Server.
+* wsrep API - The interface and the responsibilities for the database server and replication provider. It provides integration with the database server engine for write-set replication.
+* Galera Plugin - The plugin that enables the write-set replication service functionality.
+* Group Communication plugins - The various group communication systems available to Galera Cluster.
+
+A database vendor that would like to leverage Galera Cluster technology would need to incorporate the WriteSet Replication (wsrep) API patch into its database server codebase. This will allow the Galera plugin which works as a wsrep provider to communicate and replicate transactions (writesets in Galera terms) via group communication protocol. This enables a synchronous master-master setup for InnoDB. Transactions are synchronously committed on all nodes.
+
+In case of a node failing, the other nodes will continue to operate and kept up to date. When the failed node comes up again, it automatically synchronizes with the other nodes through State Snapshot Transfer (SST) or Incremental State Transfer (IST) depending on the last known state, before it is allowed back into the cluster. No data is lost when a node fails.
 ## How To Configure a Galera Cluster with MariaDB
 Clustering adds high availability to your database by distributing changes to different servers. In the event that one of the instances fails, others are quickly available to continue serving.
 #### Prerequisites
