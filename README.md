@@ -181,3 +181,5 @@ Output
 [mariadb website](https://mariadb.org/)
 
 [Learn MySQL MariaDB for Beginners](https://www.tecmint.com/learn-mysql-mariadb-for-beginners/)
+
+[Galera Cluster for MySQL - Tutorial](https://severalnines.com/resources/tutorials/galera-cluster-mysql-tutorial)
